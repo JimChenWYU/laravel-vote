@@ -269,6 +269,21 @@ class FeatureTest extends TestCase
         self::assertEmpty($sqls->all());
     }
 
+    public function test_query_with_voters()
+    {
+        $user1 = User::create(['name' => 'jcc']);
+        $user2 = User::create(['name' => 'allen']);
+
+        $post = Post::create(['title' => 'Learn laravel.']);
+        $user1->upVote($post);
+        $user2->downVote($post);
+
+        /** @var Post $post */
+        $post = Post::with(['voters'])->first();
+        self::assertTrue($post->isVotedBy($user1, VoteItems::UP));
+        self::assertTrue($post->isVotedBy($user2, VoteItems::DOWN));
+    }
+
     /**
      * @param \Closure $callback
      *

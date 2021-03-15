@@ -12,4 +12,8 @@ class User extends Model
     use Votable;
 
     protected $fillable = ['name'];
+
+    protected $casts = [
+        'id' => 'int',
+    ];
 }

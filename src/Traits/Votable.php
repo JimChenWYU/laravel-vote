@@ -21,7 +21,10 @@ trait Votable
     {
         if (\is_a($user, \config('auth.providers.users.model'))) {
             if ($this->relationLoaded('voters')) {
-                return $this->voters->contains($user);
+                return $this->voters->when(\is_string($type), function ($votes) use ($type) {
+                    /** @var \Illuminate\Database\Eloquent\Collection $votes */
+                    return $votes->where('pivot.vote_type', '===', (string)new VoteItems($type));
+                })->contains($user);
             }
 
             return $this->voters()
@@ -48,6 +51,7 @@ trait Votable
             'votable_id',
             \config('vote.user_foreign_key')
         )
+            ->withPivot(['vote_type'])
             ->where('votable_type', $this->getMorphClass());
     }
 
