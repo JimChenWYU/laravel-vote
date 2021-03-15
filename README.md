@@ -1,5 +1,10 @@
 # Laravel Vote System
 
+[![Test Status](https://github.com/JimChenWYU/laravel-vote/workflows/Test/badge.svg)](https://github.com/JimChenWYU/laravel-vote/actions)
+[![Lint Status](https://github.com/JimChenWYU/laravel-vote/workflows/Lint/badge.svg)](https://github.com/JimChenWYU/laravel-vote/actions)
+[![Latest Stable Version](https://poser.pugx.org/jimchen/laravel-vote/v/stable.svg)](https://packagist.org/packages/jimchen/laravel-vote)
+[![License](https://poser.pugx.org/jimchen/laravel-vote/license)](https://packagist.org/packages/jimchen/laravel-vote)
+
 :tada: This package helps you to add user based vote system to your model.
 
 > fork from [jcc/laravel-vote](https://github.com/jcc/laravel-vote)
