@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Jcc\LaravelVote;
+namespace JimChen\LaravelVote;
 
 use Illuminate\Support\ServiceProvider;
 

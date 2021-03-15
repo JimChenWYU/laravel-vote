@@ -1,10 +1,10 @@
 <?php
 
-namespace Jcc\LaravelVote\Tests;
+namespace JimChen\LaravelVote\Tests;
 
 use Illuminate\Database\Eloquent\Model;
-use Jcc\LaravelVote\Traits\Votable;
-use Jcc\LaravelVote\Traits\Voter;
+use JimChen\LaravelVote\Traits\Votable;
+use JimChen\LaravelVote\Traits\Voter;
 
 class User extends Model
 {

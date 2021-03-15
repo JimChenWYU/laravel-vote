@@ -1,9 +1,9 @@
 <?php
 
-namespace Jcc\LaravelVote\Tests;
+namespace JimChen\LaravelVote\Tests;
 
 use Illuminate\Database\Eloquent\Model;
-use Jcc\LaravelVote\Traits\Votable;
+use JimChen\LaravelVote\Traits\Votable;
 
 class Book extends Model
 {

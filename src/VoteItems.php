@@ -1,8 +1,8 @@
 <?php
 
-namespace Jcc\LaravelVote;
+namespace JimChen\LaravelVote;
 
-use Jcc\LaravelVote\Exceptions\UnexpectValueException;
+use JimChen\LaravelVote\Exceptions\UnexpectValueException;
 use Stringable;
 
 final class VoteItems implements Stringable

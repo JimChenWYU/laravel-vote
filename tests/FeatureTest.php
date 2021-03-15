@@ -1,13 +1,13 @@
 <?php
 
-namespace Jcc\LaravelVote\Tests;
+namespace JimChen\LaravelVote\Tests;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Jcc\LaravelVote\Events\Voted;
-use Jcc\LaravelVote\Exceptions\UnexpectValueException;
-use Jcc\LaravelVote\VoteItems;
+use JimChen\LaravelVote\Events\Voted;
+use JimChen\LaravelVote\Exceptions\UnexpectValueException;
+use JimChen\LaravelVote\VoteItems;
 
 class FeatureTest extends TestCase
 {

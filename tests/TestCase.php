@@ -1,8 +1,8 @@
 <?php
 
-namespace Jcc\LaravelVote\Tests;
+namespace JimChen\LaravelVote\Tests;
 
-use Jcc\LaravelVote\VoteServiceProvider;
+use JimChen\LaravelVote\VoteServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

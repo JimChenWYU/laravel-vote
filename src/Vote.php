@@ -1,13 +1,13 @@
 <?php
 
-namespace Jcc\LaravelVote;
+namespace JimChen\LaravelVote;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Auth;
-use Jcc\LaravelVote\Events\CancelVoted;
-use Jcc\LaravelVote\Events\Voted;
+use JimChen\LaravelVote\Events\CancelVoted;
+use JimChen\LaravelVote\Events\Voted;
 
 /**
  * Class Vote

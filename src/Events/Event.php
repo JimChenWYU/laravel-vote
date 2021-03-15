@@ -1,6 +1,6 @@
 <?php
 
-namespace Jcc\LaravelVote\Events;
+namespace JimChen\LaravelVote\Events;
 
 use Illuminate\Database\Eloquent\Model;
 

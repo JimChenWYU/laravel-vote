@@ -1,9 +1,9 @@
 <?php
 
-namespace Jcc\LaravelVote\Traits;
+namespace JimChen\LaravelVote\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Jcc\LaravelVote\VoteItems;
+use JimChen\LaravelVote\VoteItems;
 
 /**
  * Trait Votable
