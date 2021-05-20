@@ -23,7 +23,7 @@ trait Voter
      */
     public function vote(Model $object, string $type): Vote
     {
-	    $type = (string)new VoteItems($type);
+        $type = (string)new VoteItems($type);
 
         return $type === VoteItems::UP ? $this->upVote($object) : $this->downVote($object);
     }
