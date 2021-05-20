@@ -1,7 +1,7 @@
 # Laravel Vote System
 
 [![Test Status](https://github.com/JimChenWYU/laravel-vote/workflows/Test/badge.svg)](https://github.com/JimChenWYU/laravel-vote/actions)
-[![Lint Status](https://github.com/JimChenWYU/laravel-vote/workflows/Lint/badge.svg)](https://github.com/JimChenWYU/laravel-vote/actions)
+[![Check & fix styling](https://github.com/JimChenWYU/laravel-vote/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/JimChenWYU/laravel-vote/actions/workflows/php-cs-fixer.yml)
 [![Latest Stable Version](https://poser.pugx.org/jimchen/laravel-vote/v/stable.svg)](https://packagist.org/packages/jimchen/laravel-vote)
 [![License](https://poser.pugx.org/jimchen/laravel-vote/license)](https://packagist.org/packages/jimchen/laravel-vote)
 
