@@ -2,6 +2,7 @@
 
 namespace JimChen\LaravelVote\Traits;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use JimChen\LaravelVote\Vote;
@@ -158,5 +159,19 @@ trait Voter
     public function getDownVotedItems(string $model)
     {
         return $this->getVotedItems($model, VoteItems::DOWN);
+    }
+
+    public function attachVoteStatusToVotables(Collection $votables)
+    {
+        $voterVoted = $this->votes()->get()->keyBy(function ($item) {
+            return \sprintf('%s-%s', $item->votable_type, $item->votable_id);
+        });
+
+        $votables->map(function (Model $votable) use ($voterVoted) {
+            $key = \sprintf('%s-%s', $votable->getMorphClass(), $votable->getKey());
+            $votable->setAttribute('has_voted', $voterVoted->has($key));
+            $votable->setAttribute('has_up_voted', $voterVoted->has($key) && $voterVoted->get($key)->is_up_voted);
+            $votable->setAttribute('has_down_voted', $voterVoted->has($key) && $voterVoted->get($key)->is_down_voted);
+        });
     }
 }

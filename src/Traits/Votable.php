@@ -2,7 +2,9 @@
 
 namespace JimChen\LaravelVote\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use JimChen\LaravelVote\VoteItems;
 
 /**
@@ -93,5 +95,73 @@ trait Votable
     public function downVoters(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->voters()->where('vote_type', VoteItems::DOWN);
+    }
+
+    public function totalVotes()
+    {
+        return $this->votes()->sum('votes');
+    }
+
+    public function totalUpVotes()
+    {
+        return $this->votes()->where('vote_type', VoteItems::UP)->sum('votes');
+    }
+
+    public function totalDownVotes()
+    {
+        return $this->votes()->where('vote_type', VoteItems::DOWN)->sum('votes');
+    }
+
+    public function scopeWithTotalVotes(Builder $builder)
+    {
+        return $builder->addSelect(
+            DB::raw(sprintf(
+                'cast(ifnull((select sum(`%s`.`votes`)
+                                        from `votes` where %s = `%s`.`votable_id`
+                                        and `%s`.`votable_type` = "%s"), 0) as SIGNED)
+                            as `total_votes`',
+                config('vote.votes_table'),
+                $this->getTable() . '.' . $this->getKeyName(),
+                config('vote.votes_table'),
+                config('vote.votes_table'),
+                $this->getTable()
+            ))
+        );
+    }
+
+    public function scopeWithTotalUpVotes(Builder $builder)
+    {
+        return $builder->addSelect(
+            DB::raw(sprintf(
+                'cast(ifnull((select sum(`%s`.`votes`)
+                                        from `votes` where `vote_type` = "%s" and %s = `%s`.`votable_id`
+                                        and `%s`.`votable_type` = "%s"), 0) as SIGNED)
+                            as `total_votes`',
+                config('vote.votes_table'),
+                VoteItems::UP,
+                $this->getTable() . '.' . $this->getKeyName(),
+                config('vote.votes_table'),
+                config('vote.votes_table'),
+                $this->getTable()
+            ))
+        );
+    }
+
+    public function scopeWithTotalDownVotes(Builder $builder)
+    {
+        return $builder->addSelect(
+            DB::raw(sprintf(
+                'cast(ifnull((select sum(`%s`.`votes`)
+                                        from `votes` where `vote_type` = "%s" and %s = `%s`.`votable_id`
+                                        and `%s`.`votable_type` = "%s"), 0) as SIGNED)
+                            as `total_votes`',
+                config('vote.votes_table'),
+                VoteItems::DOWN,
+                $this->getTable() . '.' . $this->getKeyName(),
+                config('vote.votes_table'),
+                config('vote.votes_table'),
+                $this->getTable()
+            ))
+        );
     }
 }
