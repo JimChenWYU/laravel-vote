@@ -21,9 +21,12 @@ class Vote extends Model
 
     protected $dispatchesEvents = [
         'created' => Voted::class,
-        'updated' => Voted::class,
-
         'deleted' => CancelVoted::class,
+    ];
+
+    protected $appends = [
+        'is_up_vote',
+        'is_down_vote',
     ];
 
     /**
@@ -97,5 +100,15 @@ class Vote extends Model
     public function isDown(): bool
     {
         return $this->vote_type === VoteItems::DOWN;
+    }
+
+    public function getIsUpVoteAttribute(): bool
+    {
+        return $this->isUp();
+    }
+
+    public function getIsDownVoteAttribute(): bool
+    {
+        return $this->isDown();
     }
 }

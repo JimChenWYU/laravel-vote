@@ -23,33 +23,9 @@ trait Voter
      */
     public function vote(Model $object, string $type): Vote
     {
-        $attributes = [
-            'votable_type' => $object->getMorphClass(),
-            'votable_id' => $object->getKey(),
-            \config('vote.user_foreign_key') => $this->getKey(),
-        ];
+	    $type = (string)new VoteItems($type);
 
-        /* @var \Illuminate\Database\Eloquent\Model $vote */
-        $vote = \app(\config('vote.vote_model'));
-
-        $type = (string)new VoteItems($type);
-
-        /* @var \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder $vote */
-        return tap($vote->where($attributes)->firstOr(
-            function () use ($vote, $attributes, $type) {
-                $vote->unguard();
-
-                if ($this->relationLoaded('votes')) {
-                    $this->unsetRelation('votes');
-                }
-
-                return $vote->create(\array_merge($attributes, [
-                    'vote_type' => $type,
-                ]));
-            }
-        ), function (Model $model) use ($type) {
-            $model->update(['vote_type' => $type]);
-        });
+        return $type === VoteItems::UP ? $this->upVote($object) : $this->downVote($object);
     }
 
     /**
@@ -123,12 +99,32 @@ trait Voter
 
     public function upVote(Model $object): Vote
     {
-        return $this->vote($object, VoteItems::UP);
+        /* @var Votable|Model $object */
+        if ($this->hasVoted($object)) {
+            $this->cancelVote($object);
+        }
+
+        $vote = app(config('vote.vote_model'));
+        $vote->{config('vote.user_foreign_key')} = $this->getKey();
+        $vote->vote_type = VoteItems::UP;
+        $object->votes()->save($vote);
+
+        return $vote;
     }
 
     public function downVote(Model $object): Vote
     {
-        return $this->vote($object, VoteItems::DOWN);
+        /* @var Votable|Model $object */
+        if ($this->hasVoted($object)) {
+            $this->cancelVote($object);
+        }
+
+        $vote = app(config('vote.vote_model'));
+        $vote->{config('vote.user_foreign_key')} = $this->getKey();
+        $vote->vote_type = VoteItems::DOWN;
+        $object->votes()->save($vote);
+
+        return $vote;
     }
 
     public function hasUpVoted(Model $object)
