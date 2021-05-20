@@ -61,16 +61,16 @@ class FeatureTest extends TestCase
 
         self::assertTrue($user->cancelVote($post));
 
-	    Event::assertDispatched(CancelVoted::class, function ($event) use ($user, $post){
-		    self::assertFalse($user->hasVoted($post));
-		    return true;
-	    });
+        Event::assertDispatched(CancelVoted::class, function ($event) use ($user, $post) {
+            self::assertFalse($user->hasVoted($post));
+            return true;
+        });
 
         Event::fake();
 
-	    $user->downVote($post);
+        $user->downVote($post);
 
-	    Event::assertDispatched(Voted::class, function ($event) use ($user, $post) {
+        Event::assertDispatched(Voted::class, function ($event) use ($user, $post) {
             $vote = $event->vote;
             self::assertFalse($vote->isUp());
             self::assertTrue($vote->isDown());

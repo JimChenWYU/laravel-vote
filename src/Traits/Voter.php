@@ -59,7 +59,7 @@ trait Voter
             ->first();
 
         if ($relation) {
-	        $this->unsetRelation('votes');
+            $this->unsetRelation('votes');
 
             return $relation->delete();
         }
