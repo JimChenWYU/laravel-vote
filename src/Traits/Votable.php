@@ -40,6 +40,11 @@ trait Votable
         return false;
     }
 
+	public function votes(): \Illuminate\Database\Eloquent\Relations\MorphMany
+	{
+		return $this->morphMany(config('vote.vote_model'), 'votable');
+	}
+
     /**
      * Return voters.
      *
